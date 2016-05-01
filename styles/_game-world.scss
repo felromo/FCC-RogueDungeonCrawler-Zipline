@@ -1,5 +1,6 @@
 $game-container-background: #000;
 $area-background-color: #fff;
+$bridge-background-color: #fff;
 
 .game-container {
   background: $game-container-background;
@@ -7,6 +8,7 @@ $area-background-color: #fff;
   margin: 0 auto;
   position: relative;
   width: 80em;
+  z-index: -2;
 }
 
 .area-great-hall {
@@ -38,9 +40,29 @@ $area-background-color: #fff;
 
 .area-kings-room {
   background: $area-background-color;
-  position: absolute;
-  top: 1em;
-  right: 1em;
   height: 38em;
+  position: absolute;
+  right: 1em;
+  top: 1em;
   width: 30em;
+}
+
+.bridge-1 {
+  background: $bridge-background-color;
+  height: 9em;
+  left: 21em;
+  position: absolute;
+  top: 14em;
+  width: 5em;
+  z-index: -1;
+}
+
+.bridge-2 {
+  background: $bridge-background-color;
+  bottom: 1em;
+  height: 5em;
+  position: absolute;
+  right: 28em;
+  width: 9em;
+  z-index: -1;
 }
