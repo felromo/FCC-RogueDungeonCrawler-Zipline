@@ -1,9 +1,12 @@
 import React from 'react';
+import ScoreBoard from './score-board';
+import GameWorld from './game-world';
 
 export default () => {
   return (
     <div>
-      <h1>because we dont have a render method</h1>
+      <ScoreBoard />
+      <GameWorld />
     </div>
   );
 }

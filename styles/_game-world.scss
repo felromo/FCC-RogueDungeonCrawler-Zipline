@@ -1,0 +1,46 @@
+$game-container-background: #000;
+$area-background-color: #fff;
+
+.game-container {
+  background: $game-container-background;
+  height: 40em;
+  margin: 0 auto;
+  position: relative;
+  width: 80em;
+}
+
+.area-great-hall {
+  background: $area-background-color;
+  height: 13em;
+  left: 1em;
+  position: absolute;
+  top: 1em;
+  width: 45em;
+}
+
+.area-sleeping-quarters {
+  background: $area-background-color;
+  bottom: 1em;
+  height: 20em;
+  left: 1em;
+  position: absolute;
+  width: 21em;
+}
+
+.area-barracks {
+  background: $area-background-color;
+  bottom: 1em;
+  height: 20em;
+  left: 25em;
+  position: absolute;
+  width: 21em;
+}
+
+.area-kings-room {
+  background: $area-background-color;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  height: 38em;
+  width: 30em;
+}

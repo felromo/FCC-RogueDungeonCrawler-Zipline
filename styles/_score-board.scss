@@ -1,0 +1,22 @@
+$score-board-container-background: #000;
+
+.score-board-container {
+  color: #fff;
+  background: $score-board-container-background;
+  height: 5em;
+  margin: 1em auto;
+  margin-top: 5em;
+  width: 70em;
+}
+
+.player-information {
+  display: block;
+  font-size: 1.5em;
+  width: 100%;
+  padding: 1em;
+
+  li {
+    display: inline-block;
+    margin: 0 5em;
+  }
+}
