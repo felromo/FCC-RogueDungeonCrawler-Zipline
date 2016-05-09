@@ -1,10 +1,12 @@
+$player-height: 2em;
+$player-width: 2em;
 
 .player {
   position: relative;
   top: 0;
   left: 0;
-  height: 1em;
-  width: 1em;
+  height: $player-height;
+  width: $player-width;
   background: blue;
   z-index: 2;
 }
