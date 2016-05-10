@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
 import ScoreBoard from './score-board';
 import GameWorld from './game-world';
+import {Grid, FLOOR, WALL, ENEMEY, BOSS, WEAPON, HEALTH} from '../game_grid';
 import '../../styles/style.scss';
-import $ from 'jquery';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,18 +14,26 @@ export default class App extends Component {
       weapon: 'dagger'
     };
     this.player = {
-      x: 0,
-      y: 0
+      x: 10,
+      y: 10
     };
     this.keysPressed = {};
     this.movementRate = 1;
     this.calculateNewPosition = this.calculateNewPosition.bind(this);
+    this.isAbleToMove = this.isAbleToMove.bind(this);
+    console.log(Grid);
   }
 
   calculateNewPosition(oldValue, direction1, direction2) {
     return parseInt(oldValue, 10)
-                 - (this.keysPressed[direction1] ? this.movementRate : 0)
-                 + (this.keysPressed[direction2] ? this.movementRate : 0);
+         - (this.keysPressed[direction1] ? this.movementRate : 0)
+         + (this.keysPressed[direction2] ? this.movementRate : 0);
+  }
+
+  isAbleToMove(position) {
+    if (Grid[position.x][position.y].walkable)
+      return true;
+    return false;
   }
 
   componentDidMount() {
@@ -37,18 +46,18 @@ export default class App extends Component {
     });
     setInterval(() => {
       // every 20 milliseconds update players position on screen and store those values
+      // here perform the checks before updating the player position
+      let tmp = {x: 10, y: 10};
+      tmp.x = this.calculateNewPosition(this.player.x, 37, 39);
+      tmp.y = this.calculateNewPosition(this.player.y, 38, 40);
+      if (this.isAbleToMove(tmp)) {
+        this.player.x = tmp.x;
+        this.player.y = tmp.y;
+      }
       $('.player').css({
-        left: (index) => {
-          // left and right
-          return this.calculateNewPosition(this.player.x, 37, 39);
-        },
-        top: (index)  => {
-          // up and down
-          return this.calculateNewPosition(this.player.y, 38, 40);
-        }
+        left: this.player.x,
+        top: this.player.y
       });
-      this.player.x = parseInt($('.player').css('left'));
-      this.player.y = parseInt($('.player').css('top'));
     }, 20);
   }
 
