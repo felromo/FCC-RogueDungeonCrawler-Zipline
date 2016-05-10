@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-/* import keydown from 'react-keydown'; */
 import Player from './player';
 
 export default class GameWorld extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { key: 'n/a' };
   }
 
 
