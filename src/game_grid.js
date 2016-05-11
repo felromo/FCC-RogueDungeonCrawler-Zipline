@@ -76,6 +76,23 @@ function generateWalls(grid) {
     }
   }
 
+  // left vertical line
+  for(let col = 220; col < 250; col++) {
+    for(let row = 230; row < 390; row++) {
+      grid[col][row] = {
+        walkable:false, type: WALL
+      };
+    }
+  }
+  // right vertical line
+  for(let col = 460; col < 490; col++) {
+    for(let row = 10; row < 340; row++) {
+      grid[col][row] = {
+        walkable:false, type: WALL
+      };
+    }
+  }
+
   return grid;
 }
 
