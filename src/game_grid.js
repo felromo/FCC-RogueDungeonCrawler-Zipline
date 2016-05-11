@@ -52,7 +52,24 @@ function generateWalls(grid) {
 
   // bottom horizontal wall
   for(let col = 0; col < 800; col++) {
-    for(let row = 391; row < 400; row++) {
+    for(let row = 390; row < 400; row++) {
+      grid[col][row] = {
+        walkable:false, type: WALL
+      };
+    }
+  }
+
+  // left horizontal block
+  for(let col = 10; col < 210; col++) {
+    for(let row = 140; row < 190; row++) {
+      grid[col][row] = {
+        walkable:false, type: WALL
+      };
+    }
+  }
+  // right horizontal block
+  for(let col = 260; col < 460; col++) {
+    for(let row = 140; row < 190; row++) {
       grid[col][row] = {
         walkable:false, type: WALL
       };
