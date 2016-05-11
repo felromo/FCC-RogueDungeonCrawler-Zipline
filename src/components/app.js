@@ -31,7 +31,9 @@ export default class App extends Component {
   }
 
   isAbleToMove(position) {
-    if (Grid[position.x][position.y].walkable)
+    // check all 4 corners of player
+    const {x,y} = position;
+    if (Grid[x][y].walkable && Grid[x+29][y] && Grid[x][y+29] && Grid[x+29][y+29])
       return true;
     return false;
   }
