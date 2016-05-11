@@ -5,21 +5,6 @@ export const BOSS = 'BOSS';
 export const WEAPON = 'WEAPON';
 export const HEALTH = 'HEALTH';
 
-function createGrid() {
-  const rows = 400;
-  const columns = 800;
-  let grid = [];
-  for(let x = 0; x < columns; x++) {
-    grid.push([]);
-    for(let y = 0; y < rows; y++) {
-      grid[x].push({walkable: true, type: FLOOR});
-    }
-  }
-
-  grid = generateWalls(grid);
-
-  return grid;
-}
 
 function generateWalls(grid) {
   // generate the borders around the game world
@@ -96,20 +81,34 @@ function generateWalls(grid) {
   return grid;
 }
 
-function generateEnemies() {
+function generateEnemies(grid) {
 
 }
 
-function generateBoss() {
+function generateBoss(grid) {
 
 }
 
-function generateWeapons() {
+function generateWeapons(grid) {
 
 }
 
-function generateHealthDrops() {
+function generateHealthDrops(grid) {
 
 }
 
-export const Grid = createGrid();
+export function createGrid() {
+  const rows = 400;
+  const columns = 800;
+  let grid = [];
+  for(let x = 0; x < columns; x++) {
+    grid.push([]);
+    for(let y = 0; y < rows; y++) {
+      grid[x].push({walkable: true, type: FLOOR});
+    }
+  }
+
+  grid = generateWalls(grid);
+
+  return grid;
+}

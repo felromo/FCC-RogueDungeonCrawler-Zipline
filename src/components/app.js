@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import $ from 'jquery';
 import ScoreBoard from './score-board';
 import GameWorld from './game-world';
-import {Grid, FLOOR, WALL, ENEMEY, BOSS, WEAPON, HEALTH} from '../game_grid';
+import {createGrid, FLOOR, WALL, ENEMEY, BOSS, WEAPON, HEALTH} from '../game_grid';
 import '../../styles/style.scss';
 
 export default class App extends Component {
@@ -21,7 +21,7 @@ export default class App extends Component {
     this.movementRate = 1;
     this.calculateNewPosition = this.calculateNewPosition.bind(this);
     this.isAbleToMove = this.isAbleToMove.bind(this);
-    console.log(Grid);
+    this.Grid = createGrid();
   }
 
   calculateNewPosition(oldValue, direction1, direction2) {
@@ -33,7 +33,7 @@ export default class App extends Component {
   isAbleToMove(position) {
     // check all 4 corners of player
     const {x,y} = position;
-    if (Grid[x][y].walkable && Grid[x+19][y].walkable && Grid[x][y+19].walkable && Grid[x+19][y+19].walkable)
+    if (this.Grid[x][y].walkable && this.Grid[x+19][y].walkable && this.Grid[x][y+19].walkable && this.Grid[x+19][y+19].walkable)
       return true;
     return false;
   }
