@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export const FLOOR = 'FLOOR';
 export const WALL = 'WALL';
 export const ENEMY = 'ENEMY';
@@ -78,11 +80,54 @@ function generateWalls(grid) {
     }
   }
 
-  return grid;
 }
 
-function generateEnemies(grid) {
+export function generateEnemies(grid) {
+  //generate 5 enemmies
+  let enemies = [];
+  while (enemies.length < 5) {
+    console.log('I ran');
+    // generate 2 random coordinates and check to see if they are 'open'
+    const row = Math.floor((Math.random()*400));
+    const col = Math.floor((Math.random()*800));
+    // needs to check for proximity to a wall
+    if (grid[col][row].walkable) {
+      // if too close to the wall it will get out of bounds error
+      for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
+        for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
+          grid[col+enemy_col][row+enemy_row] = {
+            walkable:false, type: ENEMY
+          };
+        }
+      }
+      /* grid[col][row].walkable = false;
+         grid[col][row].type = ENEMY; */
+      // the origin for visual
+      enemies.push({col, row});
+    }
+  }
+  // if they are 'open' insert the origin there and add 19 more px across and down
+  // if not 'open' repeat process
+  /* grid[30][30] = {
+     walkable: false, type: ENEMY
+     };
+     grid[40][40] = {
+     walkable: false, type: ENEMY
+     }; */
+  return enemies;
+}
 
+export function locateEveryone(grid, type) {
+  let counter = 0;
+  grid.forEach((inner, index1) => {
+    inner.forEach((value, index2) => {
+      if(value.type === type) {
+        console.log(`${index1},${index2}:${value.type}`);
+        counter++;
+      }
+    });
+  });
+  console.log(`counter: ${counter}`);
 }
 
 function generateBoss(grid) {
@@ -108,7 +153,7 @@ export function createGrid() {
     }
   }
 
-  grid = generateWalls(grid);
+  generateWalls(grid);
 
   return grid;
 }

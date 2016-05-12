@@ -1,0 +1,9 @@
+$enemy-height: 2em;
+$enemy-width: 2em;
+
+.enemy {
+  position: absolute;
+  height: $enemy-height;
+  width: $enemy-width;
+  background: red;
+}
