@@ -88,8 +88,8 @@ export function generateEnemies(grid) {
   while (enemies.length < 5) {
     console.log('I ran');
     // generate 2 random coordinates and check to see if they are 'open'
-    const row = Math.floor((Math.random()*380)+10);
-    const col = Math.floor((Math.random()*780)+10);
+    const row = Math.floor((Math.random()*350)+10);
+    const col = Math.floor((Math.random()*750)+10);
     // needs to check for proximity to a wall
     /* if (grid[col][row].walkable) { */
     if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
