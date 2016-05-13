@@ -82,6 +82,18 @@ function generateWalls(grid) {
 
 }
 
+export function generatorHelper(grid, origin, walkable, type) {
+  const [col, row] = origin;
+      for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
+        for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
+          grid[col+enemy_col][row+enemy_row] = {
+            walkable,
+            type
+          };
+        }
+      }
+}
+
 export function generateEnemies(grid) {
   //generate 5 enemmies
   let enemies = [];
@@ -91,30 +103,14 @@ export function generateEnemies(grid) {
     const row = Math.floor((Math.random()*350)+10);
     const col = Math.floor((Math.random()*750)+10);
     // needs to check for proximity to a wall
-    /* if (grid[col][row].walkable) { */
     if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
-      // if too close to the wall it will get out of bounds error
-      for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
-        for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
-          grid[col+enemy_col][row+enemy_row] = {
-            walkable:false, type: ENEMY
-          };
-        }
-      }
-      /* grid[col][row].walkable = false;
-         grid[col][row].type = ENEMY; */
+      generatorHelper(grid, [col, row], false, ENEMY);
+
       // the origin for visual
       enemies.push({col, row});
     }
   }
-  // if they are 'open' insert the origin there and add 19 more px across and down
-  // if not 'open' repeat process
-  /* grid[30][30] = {
-     walkable: false, type: ENEMY
-     };
-     grid[40][40] = {
-     walkable: false, type: ENEMY
-     }; */
+
   return enemies;
 }
 
