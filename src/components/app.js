@@ -11,6 +11,7 @@ export default class App extends Component {
     this.state = {
       health: 100,
       level: 1,
+      exp: 0,
       weapon: 'dagger'
     };
     this.player = {
@@ -19,8 +20,11 @@ export default class App extends Component {
     };
     this.keysPressed = {};
     this.movementRate = 1;
+
     this.calculateNewPosition = this.calculateNewPosition.bind(this);
     this.isAbleToMove = this.isAbleToMove.bind(this);
+    this.battleMode = this.battleMode.bind(this);
+
     this.Grid = GameGrid.createGrid();
     this.enemies = GameGrid.generateEnemies(this.Grid);
     /* console.log(this.enemies); */
@@ -38,10 +42,19 @@ export default class App extends Component {
     if (this.Grid[x][y].walkable && this.Grid[x+19][y].walkable && this.Grid[x][y+19].walkable && this.Grid[x+19][y+19].walkable)
       return true;
     else if (this.Grid[x][y].type == GameGrid.ENEMY || this.Grid[x+19][y].type == GameGrid.ENEMY || this.Grid[x][y+19].type == GameGrid.ENEMY || this.Grid[x+19][y+19].type == GameGrid.ENEMY) {
-      console.log('there is an enemy');
+      this.battleMode();
+      return false;
     }
     return false;
   }
+
+  battleMode() {
+    console.log('entering battle mode');
+    this.setState({
+      health: this.state.health - 1
+    });
+  }
+
 
   componentDidMount() {
     // after we've mounted the componnet start listening for keystrokes
@@ -75,6 +88,7 @@ export default class App extends Component {
         <ScoreBoard
           health={this.state.health}
           level={this.state.level}
+          exp={this.state.exp}
           weapon={this.state.weapon}/>
         <GameWorld
           enemies={this.enemies}/>
