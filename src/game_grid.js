@@ -88,7 +88,8 @@ export function generatorHelper(grid, origin, walkable, type) {
         for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
           grid[col+enemy_col][row+enemy_row] = {
             walkable,
-            type
+            type,
+            origin
           };
         }
       }
@@ -98,7 +99,6 @@ export function generateEnemies(grid) {
   //generate 5 enemmies
   let enemies = [];
   while (enemies.length < 5) {
-    console.log('I ran');
     // generate 2 random coordinates and check to see if they are 'open'
     const row = Math.floor((Math.random()*350)+10);
     const col = Math.floor((Math.random()*750)+10);
@@ -107,7 +107,7 @@ export function generateEnemies(grid) {
       generatorHelper(grid, [col, row], false, ENEMY);
 
       // the origin for visual
-      enemies.push({col, row});
+      enemies.push({col, row, hp: 100});
     }
   }
 
@@ -119,7 +119,7 @@ export function locateEveryone(grid, type) {
   grid.forEach((inner, index1) => {
     inner.forEach((value, index2) => {
       if(value.type === type) {
-        console.log(`${index1},${index2}:${value.type}`);
+        console.log(`${index1},${index2}:${value.type};origin:${value.origin}`);
         counter++;
       }
     });

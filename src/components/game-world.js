@@ -12,10 +12,10 @@ export default class GameWorld extends Component {
   enemyConstructor() {
     const {enemies} = this.props;
     if (!enemies) return [];
-    console.log(enemies);
+    /* console.table(enemies); */
     return (
-      enemies.map(({col, row}, index) => {
-        return <Enemy key={index} left={col} top={row} />;
+      enemies.map(({col, row, hp}, index) => {
+        return <Enemy key={index} left={col} top={row} hp={hp}/>;
       })
     );
   }
