@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Player from './player';
 import Enemy from './enemy';
+import Boss from './boss';
 
 export default class GameWorld extends Component {
 
@@ -23,6 +24,7 @@ export default class GameWorld extends Component {
 
   render() {
     const enemies = this.enemyConstructor();
+    const {boss} = this.props;
     return (
       <div className="game-container">
         <div className="area-great-hall">
@@ -36,6 +38,7 @@ export default class GameWorld extends Component {
         {
           enemies
         }
+        <Boss left={boss.col} top={boss.row} hp={boss.hp}/>
       </div>
     );
   }

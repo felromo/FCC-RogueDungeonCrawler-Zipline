@@ -84,15 +84,15 @@ function generateWalls(grid) {
 
 export function generatorHelper(grid, origin, walkable, type) {
   const [col, row] = origin;
-      for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
-        for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
-          grid[col+enemy_col][row+enemy_row] = {
-            walkable,
-            type,
-            origin
-          };
-        }
-      }
+  for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
+    for(let enemy_row = 0; enemy_row < 20; enemy_row++) {
+      grid[col+enemy_col][row+enemy_row] = {
+        walkable,
+        type,
+        origin
+      };
+    }
+  }
 }
 
 export function generateEnemies(grid) {
@@ -127,8 +127,17 @@ export function locateEveryone(grid, type) {
   console.log(`counter: ${counter}`);
 }
 
-function generateBoss(grid) {
-
+export function generateBoss(grid) {
+  let boss;
+  while (!boss) {
+    const row = Math.floor((Math.random()*350)+10);
+    const col = Math.floor((Math.random()*750)+10);
+    if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
+      generatorHelper(grid, [col, row], false, BOSS);
+      boss = {col, row, hp: 100};
+    }
+  }
+  return boss;
 }
 
 function generateWeapons(grid) {

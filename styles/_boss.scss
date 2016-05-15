@@ -1,0 +1,9 @@
+$boss-height: 2em;
+$boss-width: 2em;
+
+.boss {
+  position: absolute;
+  height: $boss-height;
+  width: $boss-width;
+  background: purple;
+}
