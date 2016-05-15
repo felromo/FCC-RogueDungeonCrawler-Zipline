@@ -85,6 +85,15 @@ export default class App extends Component {
         this.setState({
           enemies: short_one_enemy
         });
+        this.setState({
+          exp: this.state.exp + 50
+        });
+        if (this.state.exp == 100) {
+          this.setState({
+            exp: 0,
+            level: this.state.level + 1
+          });
+        }
         GameGrid.generatorHelper(this.Grid, enemy_origin, true, GameGrid.FLOOR);
       }
       /* console.info('i ran both'); */
