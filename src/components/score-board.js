@@ -7,7 +7,7 @@ export default ({health, level, weapon, exp}) => {
         <li>Health: {health}</li>
         <li>Level: {level}</li>
         <li>Exp: {exp}</li>
-        <li>Weapon: {weapon}</li>
+        <li>Weapon: {weapon.type}</li>
       </ul>
     </div>
   );

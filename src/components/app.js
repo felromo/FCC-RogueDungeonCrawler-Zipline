@@ -13,7 +13,7 @@ export default class App extends Component {
       health: 100,
       level: 1,
       exp: 0,
-      weapon: 'dagger',
+      weapon: {type: 'dagger', dmg: 5},
       enemies: GameGrid.generateEnemies(this.Grid)
     };
     this.player = {
@@ -72,12 +72,17 @@ export default class App extends Component {
     });
     const enemy_unit = this.identifyEnemy(enemy_origin);
     if (enemy_unit > -1) {
+      // if the index of the enemy was found remove it (needs to be altered for hp)
       const short_one_enemy = this.state.enemies;
-      short_one_enemy.splice(enemy_unit, 1);
-      this.setState({
-        enemies: short_one_enemy
-      });
-      GameGrid.generatorHelper(this.Grid, enemy_origin, true, GameGrid.FLOOR);
+      short_one_enemy[enemy_unit].hp -= 1 * this.state.level + 5;
+      if (short_one_enemy[enemy_unit].hp < 1) {
+        console.info('the unit is dead');
+        short_one_enemy.splice(enemy_unit, 1);
+        this.setState({
+          enemies: short_one_enemy
+        });
+        GameGrid.generatorHelper(this.Grid, enemy_origin, true, GameGrid.FLOOR);
+      }
       /* console.info('i ran both'); */
     }
     /* console.debug('this should be our enemy', this.identifyEnemy(enemy_origin)); */
@@ -140,7 +145,7 @@ export default class App extends Component {
           level up
         </button>
         <button
-          onClick={() => {this.setState({weapon: 'sword'});}}>
+          onClick={() => {this.setState({weapon: {type: 'sword', dmg: 10}});}}>
           gain weapon
         </button>
         <button onClick={() => {console.log(this.player.x,this.player.y);}}>get player location</button>
