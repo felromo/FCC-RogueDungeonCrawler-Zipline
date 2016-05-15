@@ -52,6 +52,10 @@ export default class App extends Component {
   battleMode(player_location) {
     // right now its assuming that all clashes came from origin of player + 1
     const {x, y} = player_location;
+    const BASE_DMG = 1;
+    const LVL_DMG = this.state.level;
+    const WEAPONG_DMG = this.state.weapon.dmg;
+    const ENEMY_DMG = Math.floor((Math.random()*5)+1);
     let clashing_point = [];
     // run through every corner to figure out where the enemy and player clash
     if (this.Grid[x][y].type == GameGrid.ENEMY) // top left
@@ -68,13 +72,13 @@ export default class App extends Component {
     /* console.log(`we are entering battle with ${this.Grid[x][y].type}`); */
     /* console.info('the origin of the enemy is at', enemy_origin); */
     this.setState({
-      health: this.state.health - 1
+      health: this.state.health - ENEMY_DMG
     });
     const enemy_unit = this.identifyEnemy(enemy_origin);
     if (enemy_unit > -1) {
       // if the index of the enemy was found remove it (needs to be altered for hp)
       const short_one_enemy = this.state.enemies;
-      short_one_enemy[enemy_unit].hp -= 1 * this.state.level + 5;
+      short_one_enemy[enemy_unit].hp -= (BASE_DMG * LVL_DMG) + WEAPONG_DMG;
       if (short_one_enemy[enemy_unit].hp < 1) {
         console.info('the unit is dead');
         short_one_enemy.splice(enemy_unit, 1);
