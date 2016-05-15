@@ -27,6 +27,7 @@ export default class App extends Component {
     this.calculateNewPosition = this.calculateNewPosition.bind(this);
     this.isAbleToMove = this.isAbleToMove.bind(this);
     this.battleMode = this.battleMode.bind(this);
+    this.bossBattle = this.bossBattle.bind(this);
     this.identifyEnemy = this.identifyEnemy.bind(this);
 
     /* this.enemies = GameGrid.generateEnemies(this.Grid); */
@@ -45,9 +46,50 @@ export default class App extends Component {
       return true;
     else if (this.Grid[x][y].type == GameGrid.ENEMY || this.Grid[x+19][y].type == GameGrid.ENEMY || this.Grid[x][y+19].type == GameGrid.ENEMY || this.Grid[x+19][y+19].type == GameGrid.ENEMY) {
       this.battleMode(position);
-      return false;
+    }
+    else if (this.Grid[x][y].type == GameGrid.BOSS || this.Grid[x+19][y].type == GameGrid.BOSS || this.Grid[x][y+19].type == GameGrid.BOSS || this.Grid[x+19][y+19].type == GameGrid.BOSS) {
+      this.bossBattle(position);
     }
     return false;
+  }
+
+  bossBattle(player_location) {
+    console.warn('danger danger boss battle!!');
+    const {x, y} = player_location;
+    const BASE_DMG = 1;
+    const LVL_DMG = this.state.level;
+    const WEAPONG_DMG = this.state.weapon.dmg;
+    let clashing_point = [];
+    // run through every corner to figure out where the enemy and player clash
+    /* if (this.Grid[x][y].type == GameGrid.BOSS) // top left
+       clashing_point = [x, y];
+       else if (this.Grid[x+19][y].type == GameGrid.BOSS) // top right
+       clashing_point = [x+19, y];
+       else if (this.Grid[x][y+19].type == GameGrid.BOSS) // bottom left
+       clashing_point = [x, y+19];
+       else if (this.Grid[x+19][y+19].type == GameGrid.BOSS) // bottom right
+       clashing_point = [x+19, y+19];
+       const enemy_origin = this.Grid[clashing_point[0]][clashing_point[1]].origin; */
+    this.setState({
+      health: this.state.health - 50
+    });
+    const boss_unit = this.state.boss;
+    boss_unit.hp -= (BASE_DMG * LVL_DMG) + WEAPONG_DMG;
+    this.setState({
+      boss: boss_unit
+    });
+    if(boss_unit.hp < 1) {
+      GameGrid.generatorHelper(this.Grid, [this.state.boss.col, this.state.boss.row], true, GameGrid.FLOOR);
+      this.setState({
+        boss: null
+      });
+    }
+    console.log(this.state.boss);
+    /* this.setState({
+       boss:
+       }) */
+    /* const boss_unit = this.Grid[enemy_origin[0]][enemy_origin[1]];
+       console.table(boss_unit.hp); */
   }
 
   battleMode(player_location) {

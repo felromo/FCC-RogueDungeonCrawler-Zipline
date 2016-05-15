@@ -21,10 +21,18 @@ export default class GameWorld extends Component {
     );
   }
 
+  bossConstructor() {
+    const {boss} = this.props;
+    if(!boss) return [];
+    return (
+      <Boss left={boss.col} top={boss.row} hp={boss.hp}/>
+    );
+  }
+
 
   render() {
     const enemies = this.enemyConstructor();
-    const {boss} = this.props;
+    const boss = this.bossConstructor();
     return (
       <div className="game-container">
         <div className="area-great-hall">
@@ -38,9 +46,10 @@ export default class GameWorld extends Component {
         {
           enemies
         }
-        <Boss left={boss.col} top={boss.row} hp={boss.hp}/>
+        {
+          boss
+        }
       </div>
     );
   }
 }
-
