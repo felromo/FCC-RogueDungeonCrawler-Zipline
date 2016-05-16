@@ -135,7 +135,7 @@ export function generateBoss(grid) {
     const col = Math.floor((Math.random()*750)+10);
     if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
       generatorHelper(grid, [col, row], false, BOSS);
-      boss = {col, row, hp: 100};
+      boss = {col, row, hp: 130};
     }
   }
   return boss;

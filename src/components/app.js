@@ -30,6 +30,7 @@ export default class App extends Component {
     this.isAbleToMove = this.isAbleToMove.bind(this);
     this.battleMode = this.battleMode.bind(this);
     this.bossBattle = this.bossBattle.bind(this);
+    this.useHealthPack = this.useHealthPack.bind(this);
     this.identifyEnemy = this.identifyEnemy.bind(this);
 
     /* this.enemies = GameGrid.generateEnemies(this.Grid); */
@@ -55,6 +56,11 @@ export default class App extends Component {
         // remove the weapon from the field
 
       }
+      if (this.Grid[x][y].type == GameGrid.HEALTH || this.Grid[x+19][y].type == GameGrid.HEALTH || this.Grid[x][y+19].type == GameGrid.HEALTH || this.Grid[x+19][y+19].type == GameGrid.HEALTH) {
+        this.useHealthPack(position);
+      }
+
+      // all of the previous types are walkable so return true
       return true;
     }
     else if (this.Grid[x][y].type == GameGrid.ENEMY || this.Grid[x+19][y].type == GameGrid.ENEMY || this.Grid[x][y+19].type == GameGrid.ENEMY || this.Grid[x+19][y+19].type == GameGrid.ENEMY) {
@@ -66,6 +72,32 @@ export default class App extends Component {
     return false;
   }
 
+  useHealthPack(player_location) {
+    const {x, y} = player_location;
+    let clashing_point = [];
+    // run through every corner to figure out where the enemy and player clash
+    if (this.Grid[x][y].type == GameGrid.HEALTH) // top left
+      clashing_point = [x, y];
+    else if (this.Grid[x+19][y].type == GameGrid.HEALTH) // top right
+      clashing_point = [x+19, y];
+    else if (this.Grid[x][y+19].type == GameGrid.HEALTH) // bottom left
+      clashing_point = [x, y+19];
+    else if (this.Grid[x+19][y+19].type == GameGrid.HEALTH) // bottom right
+      clashing_point = [x+19, y+19];
+    const health_origin = this.Grid[clashing_point[0]][clashing_point[1]].origin;
+    this.setState({
+      health: 100
+    });
+    const health_unit = this.identifyEnemy(health_origin, this.state.health_packs);
+    if (health_unit > -1) {
+      const short_one_health = this.state.health_packs;
+      short_one_health.splice(health_unit, 1);
+      this.setState({
+        health_packs: short_one_health
+      });
+    }
+  }
+
   bossBattle(player_location) {
     console.warn('danger danger boss battle!!');
     const {x, y} = player_location;
@@ -74,16 +106,6 @@ export default class App extends Component {
     const WEAPONG_DMG = this.state.weapon.dmg;
     const BOSS_DMG = Math.floor((Math.random()*10)+5);
     let clashing_point = [];
-    // run through every corner to figure out where the enemy and player clash
-    /* if (this.Grid[x][y].type == GameGrid.BOSS) // top left
-       clashing_point = [x, y];
-       else if (this.Grid[x+19][y].type == GameGrid.BOSS) // top right
-       clashing_point = [x+19, y];
-       else if (this.Grid[x][y+19].type == GameGrid.BOSS) // bottom left
-       clashing_point = [x, y+19];
-       else if (this.Grid[x+19][y+19].type == GameGrid.BOSS) // bottom right
-       clashing_point = [x+19, y+19];
-       const enemy_origin = this.Grid[clashing_point[0]][clashing_point[1]].origin; */
     this.setState({
       health: this.state.health - BOSS_DMG
     });
@@ -131,7 +153,7 @@ export default class App extends Component {
     this.setState({
       health: this.state.health - ENEMY_DMG
     });
-    const enemy_unit = this.identifyEnemy(enemy_origin);
+    const enemy_unit = this.identifyEnemy(enemy_origin, this.state.enemies);
     if (enemy_unit > -1) {
       // if the index of the enemy was found remove it (needs to be altered for hp)
       const short_one_enemy = this.state.enemies;
@@ -158,12 +180,12 @@ export default class App extends Component {
     /* console.debug('this should be our enemy', this.identifyEnemy(enemy_origin)); */
   }
 
-  identifyEnemy(origin) {
+  identifyEnemy(origin, ofThis) {
     const [col, row] = origin;
     /* console.debug('our col', col, 'our row', row); */
-    return this.state.enemies.findIndex(enemy => {
+    return ofThis.findIndex(unit => {
       /* console.table(enemy); */
-      if (enemy.col == col && enemy.row == row)
+      if (unit.col == col && unit.row == row)
         return true;
       return false;
     });
