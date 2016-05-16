@@ -43,8 +43,19 @@ export default class App extends Component {
   isAbleToMove(position) {
     // check all 4 corners of player
     const {x,y} = position;
-    if (this.Grid[x][y].walkable && this.Grid[x+19][y].walkable && this.Grid[x][y+19].walkable && this.Grid[x+19][y+19].walkable)
+    if (this.Grid[x][y].walkable && this.Grid[x+19][y].walkable && this.Grid[x][y+19].walkable && this.Grid[x+19][y+19].walkable){
+      if (this.Grid[x][y].type == GameGrid.WEAPON || this.Grid[x+19][y].type == GameGrid.WEAPON || this.Grid[x][y+19].type == GameGrid.WEAPON || this.Grid[x+19][y+19].type == GameGrid.WEAPON) {
+        // pick up the weapon
+        GameGrid.generatorHelper(this.Grid, [this.state.weapon_crate.col, this.state.weapon_crate.row], true, GameGrid.FLOOR);
+        this.setState({
+          weapon: this.state.weapon_crate.weapon,
+          weapon_crate: null
+        });
+        // remove the weapon from the field
+
+      }
       return true;
+    }
     else if (this.Grid[x][y].type == GameGrid.ENEMY || this.Grid[x+19][y].type == GameGrid.ENEMY || this.Grid[x][y+19].type == GameGrid.ENEMY || this.Grid[x+19][y+19].type == GameGrid.ENEMY) {
       this.battleMode(position);
     }
