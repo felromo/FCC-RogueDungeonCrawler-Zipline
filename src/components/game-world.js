@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Player from './player';
 import Enemy from './enemy';
 import Boss from './boss';
+import WeaponCrate from './weapon-crate';
 
 export default class GameWorld extends Component {
 
   constructor(props) {
     super(props);
     this.enemyConstructor = this.enemyConstructor.bind(this);
+    this.bossConstructor = this.bossConstructor.bind(this);
+    this.weaponCrateConstructor = this.weaponCrateConstructor.bind(this);
   }
 
   enemyConstructor() {
@@ -29,10 +32,19 @@ export default class GameWorld extends Component {
     );
   }
 
+  weaponCrateConstructor() {
+    const {weapon_crate} = this.props;
+    if(!weapon_crate) return [];
+    return (
+      <WeaponCrate left={weapon_crate.col} top={weapon_crate.row} />
+    );
+  }
+
 
   render() {
     const enemies = this.enemyConstructor();
     const boss = this.bossConstructor();
+    const weapon_crate = this.weaponCrateConstructor();
     return (
       <div className="game-container">
         <div className="area-great-hall">
@@ -43,12 +55,9 @@ export default class GameWorld extends Component {
         <div className="bridge-1"></div>
         <div className="bridge-2"></div>
         <Player />
-        {
-          enemies
-        }
-        {
-          boss
-        }
+        {enemies}
+        {boss}
+        {weapon_crate}
       </div>
     );
   }

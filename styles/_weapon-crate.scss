@@ -1,0 +1,9 @@
+$weapon-crate-height: 2em;
+$weapon-crate-width: 2em;
+
+.weapon-crate {
+  position: absolute;
+  height: $weapon-crate-height;
+  width: $weapon-crate-width;
+  background: yellow;
+}

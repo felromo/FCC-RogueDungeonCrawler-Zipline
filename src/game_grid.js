@@ -140,8 +140,17 @@ export function generateBoss(grid) {
   return boss;
 }
 
-function generateWeapons(grid) {
-
+export function generateWeaponCrate(grid) {
+  let weapon_crate;
+  while (!weapon_crate) {
+    const row = Math.floor((Math.random()*350)+10);
+    const col = Math.floor((Math.random()*750)+10);
+    if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
+      generatorHelper(grid, [col, row], true, WEAPON);
+      weapon_crate = {col, row, weapon: {type: 'sword', dmg: 10}};
+    }
+  }
+  return weapon_crate;
 }
 
 function generateHealthDrops(grid) {

@@ -15,7 +15,8 @@ export default class App extends Component {
       exp: 0,
       weapon: {type: 'dagger', dmg: 5},
       enemies: GameGrid.generateEnemies(this.Grid),
-      boss: GameGrid.generateBoss(this.Grid)
+      boss: GameGrid.generateBoss(this.Grid),
+      weapon_crate: GameGrid.generateWeaponCrate(this.Grid)
     };
     this.player = {
       x: 10,
@@ -194,6 +195,7 @@ export default class App extends Component {
         <GameWorld
           enemies={this.state.enemies}
           boss={this.state.boss}
+          weapon_crate={this.state.weapon_crate}
         />
         <button
           onClick={()=> { this.setState({health: this.state.health-1});}}>
