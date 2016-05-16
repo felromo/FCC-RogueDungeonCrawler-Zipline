@@ -1,0 +1,34 @@
+.outcome-section {
+  visibility: hidden;
+  transition: all ease-in 2s;
+  opacity: 0;
+}
+
+.outcome-section-show {
+  position: absolute;
+  visibility: visible;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  display: block;
+  opacity: 1;
+  z-index: 3;
+  text-align: center;
+}
+.win-message {
+  position: relative;
+  top: 30%;
+  font-size: 7em;
+  color: green;
+  margin: 0 auto;
+}
+
+.lose-message {
+  position: relative;
+  top: 30%;
+  font-size: 7em;
+  color: red;
+  margin: 0 auto;
+}

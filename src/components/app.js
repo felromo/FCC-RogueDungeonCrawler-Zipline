@@ -17,12 +17,17 @@ export default class App extends Component {
       enemies: GameGrid.generateEnemies(this.Grid),
       boss: GameGrid.generateBoss(this.Grid),
       weapon_crate: GameGrid.generateWeaponCrate(this.Grid),
-      health_packs: GameGrid.generateHealthPacks(this.Grid)
+      health_packs: GameGrid.generateHealthPacks(this.Grid),
+      game_over: {
+        yes: false,
+        won: false
+      }
     };
     this.player = {
       x: 10,
       y: 10
     };
+    this.canEnterBattleState = true;
     this.keysPressed = {};
     this.movementRate = 1;
 
@@ -64,10 +69,10 @@ export default class App extends Component {
       return true;
     }
     else if (this.Grid[x][y].type == GameGrid.ENEMY || this.Grid[x+19][y].type == GameGrid.ENEMY || this.Grid[x][y+19].type == GameGrid.ENEMY || this.Grid[x+19][y+19].type == GameGrid.ENEMY) {
-      this.battleMode(position);
+      this.canEnterBattleState && this.battleMode(position);
     }
     else if (this.Grid[x][y].type == GameGrid.BOSS || this.Grid[x+19][y].type == GameGrid.BOSS || this.Grid[x][y+19].type == GameGrid.BOSS || this.Grid[x+19][y+19].type == GameGrid.BOSS) {
-      this.bossBattle(position);
+      this.canEnterBattleState && this.bossBattle(position);
     }
     return false;
   }
@@ -203,6 +208,20 @@ export default class App extends Component {
     setInterval(() => {
       // every 20 milliseconds update players position on screen and store those values
       // here perform the checks before updating the player position
+      if (this.state.health < 1) {
+        console.info('should display you died');
+        this.canEnterBattleState = false;
+        this.setState({
+          game_over: {yes: true, won: false}
+        });
+      }
+      if (this.state.boss === null) {
+        console.info('should display you won');
+        this.canEnterBattleState = false;
+        this.setState({
+          game_over: {yes: true, won: true}
+        });
+      }
       let tmp = {x: 10, y: 10};
       tmp.x = this.calculateNewPosition(this.player.x, 37, 39);
       tmp.y = this.calculateNewPosition(this.player.y, 38, 40);
@@ -231,6 +250,7 @@ export default class App extends Component {
           boss={this.state.boss}
           weapon_crate={this.state.weapon_crate}
           health_packs={this.state.health_packs}
+          game_over={this.state.game_over}
         />
         <button
           onClick={()=> { this.setState({health: this.state.health-1});}}>

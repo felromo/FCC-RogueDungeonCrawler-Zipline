@@ -58,10 +58,10 @@ export default class GameWorld extends Component {
     const boss = this.bossConstructor();
     const weapon_crate = this.weaponCrateConstructor();
     const health_packs = this.healthPackConstructor();
+    const should_display = this.props.game_over.yes;
     return (
       <div className="game-container">
-        <div className="area-great-hall">
-        </div>
+        <div className="area-great-hall"></div>
         <div className="area-sleeping-quarters"></div>
         <div className="area-barracks"></div>
         <div className="area-kings-room"></div>
@@ -72,6 +72,11 @@ export default class GameWorld extends Component {
         {boss}
         {weapon_crate}
         {health_packs}
+        <div className={`outcome-section ${should_display ? 'outcome-section-show' : ''}`}>
+          <p className={this.props.game_over.won ? 'win-message' : 'lose-message'}>
+            You {this.props.game_over.won ? 'Win' : 'Died'}!
+          </p>
+        </div>
       </div>
     );
   }
