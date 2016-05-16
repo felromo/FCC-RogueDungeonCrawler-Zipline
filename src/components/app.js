@@ -59,6 +59,7 @@ export default class App extends Component {
     const BASE_DMG = 1;
     const LVL_DMG = this.state.level;
     const WEAPONG_DMG = this.state.weapon.dmg;
+    const BOSS_DMG = Math.floor((Math.random()*10)+5);
     let clashing_point = [];
     // run through every corner to figure out where the enemy and player clash
     /* if (this.Grid[x][y].type == GameGrid.BOSS) // top left
@@ -71,7 +72,7 @@ export default class App extends Component {
        clashing_point = [x+19, y+19];
        const enemy_origin = this.Grid[clashing_point[0]][clashing_point[1]].origin; */
     this.setState({
-      health: this.state.health - 50
+      health: this.state.health - BOSS_DMG
     });
     const boss_unit = this.state.boss;
     boss_unit.hp -= (BASE_DMG * LVL_DMG) + WEAPONG_DMG;
