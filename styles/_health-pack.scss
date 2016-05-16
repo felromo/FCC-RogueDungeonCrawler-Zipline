@@ -1,0 +1,9 @@
+$health-pack-height: 2em;
+$health-pack-width: 2em;
+
+.health-pack {
+  position: absolute;
+  height: $health-pack-height;
+  width: $health-pack-width;
+  background: green;
+}

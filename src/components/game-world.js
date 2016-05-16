@@ -3,6 +3,7 @@ import Player from './player';
 import Enemy from './enemy';
 import Boss from './boss';
 import WeaponCrate from './weapon-crate';
+import HealthPack from './health-pack';
 
 export default class GameWorld extends Component {
 
@@ -11,6 +12,7 @@ export default class GameWorld extends Component {
     this.enemyConstructor = this.enemyConstructor.bind(this);
     this.bossConstructor = this.bossConstructor.bind(this);
     this.weaponCrateConstructor = this.weaponCrateConstructor.bind(this);
+    this.healthPackConstructor = this.healthPackConstructor.bind(this);
   }
 
   enemyConstructor() {
@@ -40,11 +42,22 @@ export default class GameWorld extends Component {
     );
   }
 
+  healthPackConstructor() {
+    const {health_packs} = this.props;
+    if(!health_packs) return [];
+    return (
+      health_packs.map(({col, row}, index) => {
+        return <HealthPack key={index} left={col} top={row} />;
+      })
+    );
+  }
+
 
   render() {
     const enemies = this.enemyConstructor();
     const boss = this.bossConstructor();
     const weapon_crate = this.weaponCrateConstructor();
+    const health_packs = this.healthPackConstructor();
     return (
       <div className="game-container">
         <div className="area-great-hall">
@@ -58,6 +71,7 @@ export default class GameWorld extends Component {
         {enemies}
         {boss}
         {weapon_crate}
+        {health_packs}
       </div>
     );
   }

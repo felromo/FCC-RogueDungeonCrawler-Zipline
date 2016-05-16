@@ -82,6 +82,19 @@ function generateWalls(grid) {
 
 }
 
+export function locateEveryone(grid, type) {
+  let counter = 0;
+  grid.forEach((inner, index1) => {
+    inner.forEach((value, index2) => {
+      if(value.type === type) {
+        console.log(`${index1},${index2}:${value.type};origin:${value.origin}`);
+        counter++;
+      }
+    });
+  });
+  console.log(`counter: ${counter}`);
+}
+
 export function generatorHelper(grid, origin, walkable, type) {
   const [col, row] = origin;
   for(let enemy_col = 0; enemy_col < 20; enemy_col++) {
@@ -114,18 +127,6 @@ export function generateEnemies(grid) {
   return enemies;
 }
 
-export function locateEveryone(grid, type) {
-  let counter = 0;
-  grid.forEach((inner, index1) => {
-    inner.forEach((value, index2) => {
-      if(value.type === type) {
-        console.log(`${index1},${index2}:${value.type};origin:${value.origin}`);
-        counter++;
-      }
-    });
-  });
-  console.log(`counter: ${counter}`);
-}
 
 export function generateBoss(grid) {
   let boss;
@@ -153,7 +154,17 @@ export function generateWeaponCrate(grid) {
   return weapon_crate;
 }
 
-function generateHealthDrops(grid) {
+export function generateHealthPacks(grid) {
+  let health_packs = [];
+  while (health_packs.length < 2) {
+    const row = Math.floor((Math.random()*350)+10);
+    const col = Math.floor((Math.random()*750)+10);
+    if(grid[col][row].walkable && grid[col+19][row].walkable && grid[col][row+19].walkable && grid[col+19][row+19].walkable) {
+      generatorHelper(grid, [col, row], true, HEALTH);
+      health_packs.push({col, row});
+    }
+  }
+  return health_packs;
 
 }
 
