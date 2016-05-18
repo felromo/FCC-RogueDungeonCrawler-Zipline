@@ -304,7 +304,7 @@ export default class App extends Component {
           game_over={this.state.game_over}
         />
         <div className="unit-keys">
-          Units: <div className="key key-enemy"></div>enemies, <div className="key key-boss"></div>boss, <div className="key key-health"></div>health, <div className="key key-weapon"></div>weapon
+          <span>Units</span>: <div className="key key-enemy"></div>enemies, <div className="key key-boss"></div>boss, <div className="key key-health"></div>health, <div className="key key-weapon"></div>weapon
         </div>
       </div>
     );
