@@ -8,7 +8,7 @@ A simple roguelike dungeon crawler game web application.
 
 ### Try it out
 There is a github page provided to try out the application without having to pull the repo
-http://tyrantwarship.github.io/FCC-RoguelikeDungeonCrawler-Zipline/
+http://tyrantwarship.github.io/FCC-RogueDungeonCrawler-Zipline/
 
 ## How-to Run Locally
 First you'll need to run `npm install` to install all the dependencies listed in the provided package.json
