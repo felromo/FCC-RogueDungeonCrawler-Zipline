@@ -4,7 +4,7 @@
 A simple roguelike dungeon crawler game web application.
 
 ## Screenshots
-![alt-text](./link-to-preview.png?raw=true)
+![alt-text](./preview1.png?raw=true)
 
 ### Try it out
 There is a github page provided to try out the application without having to pull the repo
