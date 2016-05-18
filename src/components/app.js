@@ -303,26 +303,9 @@ export default class App extends Component {
           health_packs={this.state.health_packs}
           game_over={this.state.game_over}
         />
-        <button
-          onClick={()=> { this.setState({health: this.state.health-1});}}>
-          taking damage!
-        </button>
-        <button
-          onClick={() => {this.setState({level: this.state.level+1});}}>
-          level up
-        </button>
-        <button
-          onClick={() => {this.setState({weapon: {type: 'sword', dmg: 10}});}}>
-          gain weapon
-        </button>
-        <button onClick={() => {console.log(this.player.x,this.player.y);}}>get player location</button>
-        <button
-          onClick={() => {
-              console.log(`left: ${ this.Grid[this.player.x-1][this.player.y].type}|origin ${this.Grid[this.player.x-1][this.player.y].origin}`);
-              console.log(`top: ${ this.Grid[this.player.x][this.player.y-1].type }|origin ${ this.Grid[this.player.x][this.player.y-1].origin }`);
-            }}>
-          Player Surroundings</button>
-        <button onClick={() => {GameGrid.locateEveryone(this.Grid, GameGrid.ENEMY);}}>reveal everything</button>
+        <div className="unit-keys">
+          Units: <div className="key key-enemy"></div>enemies, <div className="key key-boss"></div>boss, <div className="key key-health"></div>health, <div className="key key-weapon"></div>weapon
+        </div>
       </div>
     );
   }
