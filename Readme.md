@@ -23,4 +23,4 @@ You can build it with `npm run deploy` and it will create a bundle.js inside of 
 Happy Hacking! Pull requests welcome
 
 ## Credits
-[list of people/tutorials to thank for making this application possible]
+Thanks to zyklus for the basis for the fogwar implementation
