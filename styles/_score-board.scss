@@ -4,9 +4,12 @@ $score-board-container-background: #000;
   color: #fff;
   background: $score-board-container-background;
   height: 5em;
-  margin: 1em auto;
+  margin: .25em auto;
+  text-align: center;
   margin-top: 5em;
   width: 70em;
+  /* width: 80em; */
+
 }
 
 .player-information {
@@ -14,9 +17,10 @@ $score-board-container-background: #000;
   font-size: 1.5em;
   width: 100%;
   padding: 1em;
+  /* text-align: center; */
 
   li {
     display: inline-block;
-    margin: 0 5em;
+    margin: 0 1.5em;
   }
 }
