@@ -4,6 +4,7 @@ import Enemy from './enemy';
 import Boss from './boss';
 import WeaponCrate from './weapon-crate';
 import HealthPack from './health-pack';
+import $ from 'jquery';
 
 export default class GameWorld extends Component {
 
@@ -13,6 +14,25 @@ export default class GameWorld extends Component {
     this.bossConstructor = this.bossConstructor.bind(this);
     this.weaponCrateConstructor = this.weaponCrateConstructor.bind(this);
     this.healthPackConstructor = this.healthPackConstructor.bind(this);
+
+  }
+
+  randomPlaceHolder(nextProps) {
+    const {fog_of_war} = nextProps;
+    if (fog_of_war) {
+      console.info(fog_of_war.locationX, fog_of_war.locationY);
+    }
+    /*
+    var pX = ev.pageX;
+    var pY = ev.pageY;
+
+    var radGrd = this.ctx.createRadialGradient(pX, pY, this.r1, pX, pY, this.r2);
+    radGrd.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    radGrd.addColorStop(this.density, 'rgba(0, 0, 0, .1)');
+    radGrd.addColorStop(0, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = radGrd;
+    this.ctx.fillRect(pX - this.r2, pY - this.r2, this.r2*2, this.r2*2); */
   }
 
   enemyConstructor() {
@@ -60,7 +80,10 @@ export default class GameWorld extends Component {
     const health_packs = this.healthPackConstructor();
     const should_display = this.props.game_over.yes;
     return (
-      <div className="game-container">
+      <div className="game-container" >
+        <canvas width="800" height="400"></canvas>
+        <canvas width="800" height="400"></canvas>
+        <canvas width="800" height="400"></canvas>
         <div className="area-great-hall"></div>
         <div className="area-sleeping-quarters"></div>
         <div className="area-barracks"></div>

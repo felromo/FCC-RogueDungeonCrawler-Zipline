@@ -37,8 +37,20 @@ export default class App extends Component {
     this.bossBattle = this.bossBattle.bind(this);
     this.useHealthPack = this.useHealthPack.bind(this);
     this.identifyEnemy = this.identifyEnemy.bind(this);
+    this.lineOfSight = this.lineOfSight.bind(this);
 
-    /* this.enemies = GameGrid.generateEnemies(this.Grid); */
+    this.canvas = null;
+    this.ctx = null;
+    this.ctx2 = null;
+    this.ctx3 = null;
+    this.mDown = false;
+    this.r1 = 50;
+    this.r2 = 150;
+    this.density = .4;
+    this.hideOnMove = true;
+    this.hideFill = 'rgba(0, 0, 0, 1)';
+    this.overlay = 'rgba(0, 0, 0, 1)';
+
   }
 
   calculateNewPosition(oldValue, direction1, direction2) {
@@ -196,8 +208,46 @@ export default class App extends Component {
     });
   }
 
+  lineOfSight(x, y) {
+    var pX = x;
+    var pY = y;
+
+    var radGrd = this.ctx.createRadialGradient( pX+10, pY+10, this.r1, pX, pY, this.r2);
+    radGrd.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    radGrd.addColorStop(this.density, 'rgba(0, 0, 0, .1)');
+    radGrd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx.fillStyle = radGrd;
+    this.ctx.fillRect(pX - this.r2, pY - this.r2, this.r2*2, this.r2*2);
+
+    // partially hide the entire map and re-reveal where we are now
+    this.ctx2.globalCompositeOperation = 'source-over';
+    this.ctx2.clearRect(0, 0, 1280, 800);
+    this.ctx2.fillStyle = this.hideFill;
+    this.ctx2.fillRect(0, 0, 1280, 800);
+
+    var radGrd = this.ctx.createRadialGradient(pX+10, pY+10, this.r1, pX, pY, this.r2);
+    radGrd.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    radGrd.addColorStop(.8, 'rgba(0, 0, 0, .1)');
+    radGrd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    this.ctx2.globalCompositeOperation = 'destination-out';
+    this.ctx2.fillStyle = radGrd;
+    this.ctx2.fillRect( pX - this.r2, pY - this.r2, this.r2*2, this.r2*2 );
+  }
+
 
   componentDidMount() {
+    this.canvas = $('canvas');
+    this.ctx = this.canvas[0].getContext('2d');
+    this.ctx2 = this.canvas[1].getContext('2d');
+    this.ctx3 = this.canvas[2].getContext('2d');
+
+    this.ctx.fillStyle = this.overlay;
+    this.ctx.fillRect(0, 0, 800, 400);
+
+    this.ctx.globalCompositeOperation = 'destination-out';
+
     // after we've mounted the componnet start listening for keystrokes
     $(window).keydown(event => {
       this.keysPressed[event.which] = true;
@@ -228,6 +278,7 @@ export default class App extends Component {
       if (this.state.health > 0 && this.isAbleToMove(tmp)) {
         this.player.x = tmp.x;
         this.player.y = tmp.y;
+        this.lineOfSight(tmp.x, tmp.y);
       }
       $('.player').css({
         left: this.player.x,
