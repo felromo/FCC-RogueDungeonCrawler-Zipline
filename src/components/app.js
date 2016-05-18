@@ -225,7 +225,7 @@ export default class App extends Component {
       let tmp = {x: 10, y: 10};
       tmp.x = this.calculateNewPosition(this.player.x, 37, 39);
       tmp.y = this.calculateNewPosition(this.player.y, 38, 40);
-      if (this.isAbleToMove(tmp)) {
+      if (this.state.health > 0 && this.isAbleToMove(tmp)) {
         this.player.x = tmp.x;
         this.player.y = tmp.y;
       }
